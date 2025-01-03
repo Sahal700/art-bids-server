@@ -163,24 +163,38 @@ exports.updateAuctionStatusController = async(req,res)=>{
       status
     },{new:true})
     // console.log(existingAuction.endTime);
-    const endTime = new Date(existingAuction.endTime)
-    endTime.setHours(23, 59, 59, 0);
-    console.log(endTime.toString());
-    schedule.scheduleJob(endTime,async ()=>{
-      console.log(`Scheduled job triggered for auction ID: ${id}`);
+    if(status=="active"){
+      const endTime = new Date(existingAuction.endTime)
+      endTime.setHours(23, 59, 59, 0);
+      console.log(endTime.toString());
+      schedule.scheduleJob(endTime,async ()=>{
+        console.log(`Scheduled job triggered for auction ID: ${id}`);
 
-      // Perform the required task here (e.g., mark auction as completed)
-      await auctions.findByIdAndUpdate(
-        { _id: id },
-        { status: "completed" }, // Example: Mark the auction as "completed"
-        { new: true }
-      );
+        // Perform the required task here (e.g., mark auction as completed)
+        await auctions.findByIdAndUpdate(
+          { _id: id },
+          { status: "completed" }, // Example: Mark the auction as "completed"
+          { new: true }
+        );
 
-      console.log(`Auction ${id} marked as completed.`);
-    })
-    
+        console.log(`Auction ${id} marked as completed.`);
+      })
+    }
     res.status(200).json(existingAuction)
   } catch (error) {
     res.status(401).json(error)
+  }
+}
+
+exports.getAllAdminAuctionController = async(req,res)=>{
+  try{
+    const allAuction = await auctions.find().populate("userId","username profile")
+    if(allAuction){
+        res.status(200).json(allAuction)
+    }else{
+        res.status(406).json("No auction available")
+    }
+  }catch(error){
+      res.status(401).json(error)
   }
 }

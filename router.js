@@ -40,6 +40,11 @@ router.post('/add-bids-to-collection/:id',jwtMiddleware,bidController.addBidCont
 router.get('/get-all-bids',jwtMiddleware,bidController.getAllBidController)
 // update profile
 router.put('/update-profile',jwtMiddleware,multerconfig.single('profile'),userController.updateUserController)
+// admin apis
 // update auction status
 router.put('/auction/:id/update-status',jwtMiddleware,auctionController.updateAuctionStatusController)
+// path to get all users for admin
+router.get('/admin/get-all-users',jwtMiddleware,userController.getAllUserController)
+// get all auction
+router.get('/admin/get-all-auction',jwtMiddleware,auctionController.getAllAdminAuctionController)
 module.exports = router

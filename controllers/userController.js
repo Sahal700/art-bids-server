@@ -82,3 +82,11 @@ exports.updateUserController = async(req,res)=>{
     res.status(401).json(err)
   }
 }
+exports.getAllUserController = async(req,res)=>{
+  try {
+    allUsers = await users.find().skip(1)
+    res.status(200).json(allUsers)
+  } catch (error) {
+    res.status(401).json(error)
+  }
+}

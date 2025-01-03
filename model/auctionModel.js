@@ -51,7 +51,7 @@ image: {
 },
 status: {
   type: String,
-  enum: ["active", "completed", "cancelled","pending"],
+  enum: ["active", "completed", "rejected","pending"],
 },
 width:{
   type:String,
