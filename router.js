@@ -23,7 +23,7 @@ router.put('/edit-auction/:id',jwtMiddleware,multerconfig.single('image'),auctio
 //remove auction
 router.delete('/remove-auction/:id',jwtMiddleware,auctionController.removeUserAuctionController) 
 // get all auction
-router.get('/get-all-auction',jwtMiddleware,auctionController.getAllAuctionController)
+router.get('/get-all-auction',auctionController.getAllAuctionController)
 // get user details
 router.get('/get-user',jwtMiddleware,userController.getUserController)
 // add favourite
