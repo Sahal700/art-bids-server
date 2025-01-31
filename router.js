@@ -3,6 +3,7 @@ const userController = require('./controllers/userController')
 const auctionController = require('./controllers/auctionController')
 const favouriteController = require('./controllers/favouriteController')
 const bidController = require('./controllers/bidController')
+const walletController = require('./controllers/walletController')
 const jwtMiddleware = require('./middleware/jwtMiddleware')
 const multerconfig = require('./middleware/multerMiddleware')
 
@@ -47,4 +48,6 @@ router.put('/auction/:id/update-status',jwtMiddleware,auctionController.updateAu
 router.get('/admin/get-all-users',jwtMiddleware,userController.getAllUserController)
 // get all auction
 router.get('/admin/get-all-auction',jwtMiddleware,auctionController.getAllAdminAuctionController)
+// path to create order for razorpay
+router.post('/create-order',jwtMiddleware,walletController.createOrderController)
 module.exports = router

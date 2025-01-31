@@ -1,6 +1,7 @@
 const users = require("../model/userModel")
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const wallets = require("../model/walletModel")
 // register
 exports.registerUserController = async(req,res)=>{
   const {username , email , password} = req.body
@@ -23,6 +24,10 @@ exports.registerUserController = async(req,res)=>{
         address:"",
       })
       await newUser.save()
+      const newWallet = new wallets({
+        userId:newUser._id
+      })
+      await newWallet.save()
       res.status(200).json(newUser)
     }
   }catch(err){
